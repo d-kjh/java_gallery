@@ -8,16 +8,20 @@
             item_id = #{itemId}
     </insert>
     <select id="findAllWithItemByMemberId">
-        SELECT c.id, i.name, i.img_path, i.price, i.discount_per
+        SELECT c.id, c.item_id, i.name, i.img_path, i.price, i.discount_per
         FROM items i
         INNER JOIN carts c
         ON i.id = c.item_id
         WHERE c.member_id = #{memberId}
     </select>
 
-    <delete id="deleteByMemberIdAndItemId">
+    <delete id="deleteByCartIdAndMemberId">
+        DELETE FROM carts
+        WHERE id = #{cartId}
+        AND   member_id = #{memberId}
+    </delete>
+    <delete id="deleteByMemberId">
         DELETE FROM carts
         WHERE member_id = #{memberId}
-        AND   item_id = #{itemId}
     </delete>
 </mapper>
