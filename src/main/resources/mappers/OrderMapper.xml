@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.wikibook.gallery.order.OrderMapper">
-    <insert id="save">
+    <insert id="save" useGeneratedKeys="true" keyProperty="orderId">
         INSERT INTO orders
-        SET member_id = #{memberId},
-            name = #{name},
-            address = #{address},
-            payment = #{payment},
-            amount = #{amount},
+        SET member_id = #{memberId}
+            ,name = #{name}
+            ,address = #{address}
+            ,payment = #{payment}
+            ,amount = #{amount}
             <if test="cardNumber != null and cardNumber != ''">
-            card_number = #{cardNumber}
+            ,card_number = #{cardNumber}
             </if>
     </insert>
+    <select id="findAllByMemberIdOrderByIdDesc">
+        SELECT id, name, payment, amount, created
+        FROM orders
+        WHERE member_id = #{memberId}
+        ORDER BY id DESC
+    </select>
+
+    <select id="findByOrderIdAndMemberId">
+        SELECT id, name, address, payment, amount, created
+        FROM orders
+        WHERE id = #{orderId}
+        AND member_id = #{memberId}
+    </select>
 </mapper>

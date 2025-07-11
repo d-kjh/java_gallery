@@ -9,4 +9,8 @@
             ( #{orderId}, #{item} )
         </foreach>
     </insert>
+
+    <select id="findAllByOrderId">
+
+    </select>
 </mapper>
